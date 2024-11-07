@@ -18,7 +18,7 @@ class TextBoxAdmin(admin.ModelAdmin):
             'model': self.opts.module_name,
             'date': datetime.datetime.now().strftime('%Y%m%d%H%M%S'),
         }
-        response['Content-Disposition'] = u'attachment; filename=%s' % filename
+        response['Content-Disposition'] = 'attachment; filename=%s' % filename
         serializers.serialize('json', queryset, stream=response)
         return response
     export_selected_objects.short_description = 'Export to JSON'
@@ -28,7 +28,7 @@ class ImageBoxAdmin(TextBoxAdmin):
     list_display = ('name', 'preview', 'modification_date')
 
     def preview(self, obj):
-        template = u"""<img src="{url}" style="max-height: 48px;" />"""
+        template = """<img src="{url}" style="max-height: 48px;" />"""
         url = obj.image.url if obj.image else ''
         return template.format(url=url)
     preview.short_description=_('preview')
